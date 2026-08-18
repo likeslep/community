@@ -12,6 +12,7 @@ service QuestionService {
   rpc CreateAnswer(CreateAnswerRequest) returns (CreateAnswerResponse);
   rpc AcceptAnswer(AcceptAnswerRequest) returns (AcceptAnswerResponse);
   rpc ListQuestions(ListQuestionsRequest) returns (ListQuestionsResponse);
+  rpc ListAnswers(ListAnswersRequest) returns (ListAnswersResponse);
 }
 
 message CreateQuestionRequest {
@@ -74,4 +75,19 @@ message QuestionBrief {
 
 message ListQuestionsResponse {
   repeated QuestionBrief questions = 1;
+}
+
+message ListAnswersRequest {
+  uint64 question_id = 1;
+}
+
+message AnswerBrief {
+  uint64 id = 1;
+  string content = 2;
+  uint64 author_id = 3;
+  bool accepted = 4;
+}
+
+message ListAnswersResponse {
+  repeated AnswerBrief answers = 1;
 }

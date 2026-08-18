@@ -689,6 +689,162 @@ func (x *ListQuestionsResponse) GetQuestions() []*QuestionBrief {
 	return nil
 }
 
+type ListAnswersRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	QuestionId    uint64                 `protobuf:"varint,1,opt,name=question_id,json=questionId,proto3" json:"question_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListAnswersRequest) Reset() {
+	*x = ListAnswersRequest{}
+	mi := &file_api_proto_content_v1_qa_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListAnswersRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListAnswersRequest) ProtoMessage() {}
+
+func (x *ListAnswersRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_proto_content_v1_qa_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListAnswersRequest.ProtoReflect.Descriptor instead.
+func (*ListAnswersRequest) Descriptor() ([]byte, []int) {
+	return file_api_proto_content_v1_qa_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *ListAnswersRequest) GetQuestionId() uint64 {
+	if x != nil {
+		return x.QuestionId
+	}
+	return 0
+}
+
+type AnswerBrief struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Content       string                 `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"`
+	AuthorId      uint64                 `protobuf:"varint,3,opt,name=author_id,json=authorId,proto3" json:"author_id,omitempty"`
+	Accepted      bool                   `protobuf:"varint,4,opt,name=accepted,proto3" json:"accepted,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AnswerBrief) Reset() {
+	*x = AnswerBrief{}
+	mi := &file_api_proto_content_v1_qa_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AnswerBrief) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AnswerBrief) ProtoMessage() {}
+
+func (x *AnswerBrief) ProtoReflect() protoreflect.Message {
+	mi := &file_api_proto_content_v1_qa_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AnswerBrief.ProtoReflect.Descriptor instead.
+func (*AnswerBrief) Descriptor() ([]byte, []int) {
+	return file_api_proto_content_v1_qa_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *AnswerBrief) GetId() uint64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *AnswerBrief) GetContent() string {
+	if x != nil {
+		return x.Content
+	}
+	return ""
+}
+
+func (x *AnswerBrief) GetAuthorId() uint64 {
+	if x != nil {
+		return x.AuthorId
+	}
+	return 0
+}
+
+func (x *AnswerBrief) GetAccepted() bool {
+	if x != nil {
+		return x.Accepted
+	}
+	return false
+}
+
+type ListAnswersResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Answers       []*AnswerBrief         `protobuf:"bytes,1,rep,name=answers,proto3" json:"answers,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListAnswersResponse) Reset() {
+	*x = ListAnswersResponse{}
+	mi := &file_api_proto_content_v1_qa_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListAnswersResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListAnswersResponse) ProtoMessage() {}
+
+func (x *ListAnswersResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_proto_content_v1_qa_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListAnswersResponse.ProtoReflect.Descriptor instead.
+func (*ListAnswersResponse) Descriptor() ([]byte, []int) {
+	return file_api_proto_content_v1_qa_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *ListAnswersResponse) GetAnswers() []*AnswerBrief {
+	if x != nil {
+		return x.Answers
+	}
+	return nil
+}
+
 var File_api_proto_content_v1_qa_proto protoreflect.FileDescriptor
 
 const file_api_proto_content_v1_qa_proto_rawDesc = "" +
@@ -733,14 +889,25 @@ const file_api_proto_content_v1_qa_proto_rawDesc = "" +
 	"\tauthor_id\x18\x03 \x01(\x04R\bauthorId\x12\x16\n" +
 	"\x06status\x18\x04 \x01(\tR\x06status\"Z\n" +
 	"\x15ListQuestionsResponse\x12A\n" +
-	"\tquestions\x18\x01 \x03(\v2#.community.content.v1.QuestionBriefR\tquestions2\x84\x05\n" +
+	"\tquestions\x18\x01 \x03(\v2#.community.content.v1.QuestionBriefR\tquestions\"5\n" +
+	"\x12ListAnswersRequest\x12\x1f\n" +
+	"\vquestion_id\x18\x01 \x01(\x04R\n" +
+	"questionId\"p\n" +
+	"\vAnswerBrief\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x04R\x02id\x12\x18\n" +
+	"\acontent\x18\x02 \x01(\tR\acontent\x12\x1b\n" +
+	"\tauthor_id\x18\x03 \x01(\x04R\bauthorId\x12\x1a\n" +
+	"\baccepted\x18\x04 \x01(\bR\baccepted\"R\n" +
+	"\x13ListAnswersResponse\x12;\n" +
+	"\aanswers\x18\x01 \x03(\v2!.community.content.v1.AnswerBriefR\aanswers2\xe8\x05\n" +
 	"\x0fQuestionService\x12k\n" +
 	"\x0eCreateQuestion\x12+.community.content.v1.CreateQuestionRequest\x1a,.community.content.v1.CreateQuestionResponse\x12b\n" +
 	"\vGetQuestion\x12(.community.content.v1.GetQuestionRequest\x1a).community.content.v1.GetQuestionResponse\x12h\n" +
 	"\rCloseQuestion\x12*.community.content.v1.CloseQuestionRequest\x1a+.community.content.v1.CloseQuestionResponse\x12e\n" +
 	"\fCreateAnswer\x12).community.content.v1.CreateAnswerRequest\x1a*.community.content.v1.CreateAnswerResponse\x12e\n" +
 	"\fAcceptAnswer\x12).community.content.v1.AcceptAnswerRequest\x1a*.community.content.v1.AcceptAnswerResponse\x12h\n" +
-	"\rListQuestions\x12*.community.content.v1.ListQuestionsRequest\x1a+.community.content.v1.ListQuestionsResponseB<Z:github.com/likeslep/community/api/gen/content/v1;contentv1b\x06proto3"
+	"\rListQuestions\x12*.community.content.v1.ListQuestionsRequest\x1a+.community.content.v1.ListQuestionsResponse\x12b\n" +
+	"\vListAnswers\x12(.community.content.v1.ListAnswersRequest\x1a).community.content.v1.ListAnswersResponseB<Z:github.com/likeslep/community/api/gen/content/v1;contentv1b\x06proto3"
 
 var (
 	file_api_proto_content_v1_qa_proto_rawDescOnce sync.Once
@@ -754,7 +921,7 @@ func file_api_proto_content_v1_qa_proto_rawDescGZIP() []byte {
 	return file_api_proto_content_v1_qa_proto_rawDescData
 }
 
-var file_api_proto_content_v1_qa_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_api_proto_content_v1_qa_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_api_proto_content_v1_qa_proto_goTypes = []any{
 	(*CreateQuestionRequest)(nil),  // 0: community.content.v1.CreateQuestionRequest
 	(*CreateQuestionResponse)(nil), // 1: community.content.v1.CreateQuestionResponse
@@ -769,26 +936,32 @@ var file_api_proto_content_v1_qa_proto_goTypes = []any{
 	(*ListQuestionsRequest)(nil),   // 10: community.content.v1.ListQuestionsRequest
 	(*QuestionBrief)(nil),          // 11: community.content.v1.QuestionBrief
 	(*ListQuestionsResponse)(nil),  // 12: community.content.v1.ListQuestionsResponse
+	(*ListAnswersRequest)(nil),     // 13: community.content.v1.ListAnswersRequest
+	(*AnswerBrief)(nil),            // 14: community.content.v1.AnswerBrief
+	(*ListAnswersResponse)(nil),    // 15: community.content.v1.ListAnswersResponse
 }
 var file_api_proto_content_v1_qa_proto_depIdxs = []int32{
 	11, // 0: community.content.v1.ListQuestionsResponse.questions:type_name -> community.content.v1.QuestionBrief
-	0,  // 1: community.content.v1.QuestionService.CreateQuestion:input_type -> community.content.v1.CreateQuestionRequest
-	2,  // 2: community.content.v1.QuestionService.GetQuestion:input_type -> community.content.v1.GetQuestionRequest
-	4,  // 3: community.content.v1.QuestionService.CloseQuestion:input_type -> community.content.v1.CloseQuestionRequest
-	6,  // 4: community.content.v1.QuestionService.CreateAnswer:input_type -> community.content.v1.CreateAnswerRequest
-	8,  // 5: community.content.v1.QuestionService.AcceptAnswer:input_type -> community.content.v1.AcceptAnswerRequest
-	10, // 6: community.content.v1.QuestionService.ListQuestions:input_type -> community.content.v1.ListQuestionsRequest
-	1,  // 7: community.content.v1.QuestionService.CreateQuestion:output_type -> community.content.v1.CreateQuestionResponse
-	3,  // 8: community.content.v1.QuestionService.GetQuestion:output_type -> community.content.v1.GetQuestionResponse
-	5,  // 9: community.content.v1.QuestionService.CloseQuestion:output_type -> community.content.v1.CloseQuestionResponse
-	7,  // 10: community.content.v1.QuestionService.CreateAnswer:output_type -> community.content.v1.CreateAnswerResponse
-	9,  // 11: community.content.v1.QuestionService.AcceptAnswer:output_type -> community.content.v1.AcceptAnswerResponse
-	12, // 12: community.content.v1.QuestionService.ListQuestions:output_type -> community.content.v1.ListQuestionsResponse
-	7,  // [7:13] is the sub-list for method output_type
-	1,  // [1:7] is the sub-list for method input_type
-	1,  // [1:1] is the sub-list for extension type_name
-	1,  // [1:1] is the sub-list for extension extendee
-	0,  // [0:1] is the sub-list for field type_name
+	14, // 1: community.content.v1.ListAnswersResponse.answers:type_name -> community.content.v1.AnswerBrief
+	0,  // 2: community.content.v1.QuestionService.CreateQuestion:input_type -> community.content.v1.CreateQuestionRequest
+	2,  // 3: community.content.v1.QuestionService.GetQuestion:input_type -> community.content.v1.GetQuestionRequest
+	4,  // 4: community.content.v1.QuestionService.CloseQuestion:input_type -> community.content.v1.CloseQuestionRequest
+	6,  // 5: community.content.v1.QuestionService.CreateAnswer:input_type -> community.content.v1.CreateAnswerRequest
+	8,  // 6: community.content.v1.QuestionService.AcceptAnswer:input_type -> community.content.v1.AcceptAnswerRequest
+	10, // 7: community.content.v1.QuestionService.ListQuestions:input_type -> community.content.v1.ListQuestionsRequest
+	13, // 8: community.content.v1.QuestionService.ListAnswers:input_type -> community.content.v1.ListAnswersRequest
+	1,  // 9: community.content.v1.QuestionService.CreateQuestion:output_type -> community.content.v1.CreateQuestionResponse
+	3,  // 10: community.content.v1.QuestionService.GetQuestion:output_type -> community.content.v1.GetQuestionResponse
+	5,  // 11: community.content.v1.QuestionService.CloseQuestion:output_type -> community.content.v1.CloseQuestionResponse
+	7,  // 12: community.content.v1.QuestionService.CreateAnswer:output_type -> community.content.v1.CreateAnswerResponse
+	9,  // 13: community.content.v1.QuestionService.AcceptAnswer:output_type -> community.content.v1.AcceptAnswerResponse
+	12, // 14: community.content.v1.QuestionService.ListQuestions:output_type -> community.content.v1.ListQuestionsResponse
+	15, // 15: community.content.v1.QuestionService.ListAnswers:output_type -> community.content.v1.ListAnswersResponse
+	9,  // [9:16] is the sub-list for method output_type
+	2,  // [2:9] is the sub-list for method input_type
+	2,  // [2:2] is the sub-list for extension type_name
+	2,  // [2:2] is the sub-list for extension extendee
+	0,  // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_api_proto_content_v1_qa_proto_init() }
@@ -802,7 +975,7 @@ func file_api_proto_content_v1_qa_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_proto_content_v1_qa_proto_rawDesc), len(file_api_proto_content_v1_qa_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   13,
+			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

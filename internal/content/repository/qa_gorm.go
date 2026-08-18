@@ -53,6 +53,16 @@ func (r *Gorm) ListQuestions(ctx context.Context, limit, offset int) ([]model.Qu
 	return questions, err
 }
 
+// ListAnswers 查询某问题的回答列表（采纳的排最前）。
+func (r *Gorm) ListAnswers(ctx context.Context, questionID uint64) ([]model.Answer, error) {
+	var answers []model.Answer
+	err := r.db.WithContext(ctx).
+		Where("question_id = ?", questionID).
+		Order("accepted DESC, id ASC").
+		Find(&answers).Error
+	return answers, err
+}
+
 // CreateAnswer 创建回答 + outbox。
 func (r *Gorm) CreateAnswer(ctx context.Context, a *model.Answer, build service.BuildAnswer) error {
 	return r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {

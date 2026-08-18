@@ -99,3 +99,18 @@ func (h *QuestionHandler) ListQuestions(ctx context.Context, req *contentv1.List
 	}
 	return resp, nil
 }
+
+// ListAnswers 查询某问题的回答列表。
+func (h *QuestionHandler) ListAnswers(ctx context.Context, req *contentv1.ListAnswersRequest) (*contentv1.ListAnswersResponse, error) {
+	answers, err := h.svc.ListAnswers(ctx, req.GetQuestionId())
+	if err != nil {
+		return nil, grpcx.ToStatus(err)
+	}
+	resp := &contentv1.ListAnswersResponse{}
+	for _, a := range answers {
+		resp.Answers = append(resp.Answers, &contentv1.AnswerBrief{
+			Id: a.ID, Content: a.Content, AuthorId: a.AuthorID, Accepted: a.Accepted,
+		})
+	}
+	return resp, nil
+}

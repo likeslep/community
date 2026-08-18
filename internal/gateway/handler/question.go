@@ -102,6 +102,21 @@ func (h *Handler) CreateAnswer(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"code": 0, "message": "success", "data": resp})
 }
 
+// ListAnswers 查询回答列表。
+func (h *Handler) ListAnswers(c *gin.Context) {
+	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"code": 400, "message": "非法的问题 ID"})
+		return
+	}
+	resp, err := h.questions.ListAnswers(c.Request.Context(), &contentv1.ListAnswersRequest{QuestionId: id})
+	if err != nil {
+		writeErr(c, err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"code": 0, "message": "success", "data": resp})
+}
+
 // AcceptAnswer 采纳回答（受保护）。
 func (h *Handler) AcceptAnswer(c *gin.Context) {
 	questionID, err := strconv.ParseUint(c.Param("id"), 10, 64)

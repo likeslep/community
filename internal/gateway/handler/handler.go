@@ -81,6 +81,7 @@ func (h *Handler) RegisterRoutes(engine *gin.Engine, auth gin.HandlerFunc) {
 	api.POST("/questions", auth, h.CreateQuestion)
 	api.GET("/questions/:id", h.GetQuestion)
 	api.POST("/questions/:id/close", auth, h.CloseQuestion)
+	api.GET("/questions/:id/answers", h.ListAnswers)
 	api.POST("/questions/:id/answers", auth, h.CreateAnswer)
 	api.POST("/questions/:id/accept", auth, h.AcceptAnswer)
 

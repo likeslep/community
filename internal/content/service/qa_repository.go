@@ -29,4 +29,6 @@ type QARepository interface {
 	AcceptAnswer(ctx context.Context, questionID, answerID uint64, env kafkax.Envelope) error
 	// ListQuestions 分页查询问题。
 	ListQuestions(ctx context.Context, limit, offset int) ([]model.Question, error)
+	// ListAnswers 查询某问题的回答列表。
+	ListAnswers(ctx context.Context, questionID uint64) ([]model.Answer, error)
 }

@@ -25,6 +25,7 @@ const (
 	QuestionService_CreateAnswer_FullMethodName   = "/community.content.v1.QuestionService/CreateAnswer"
 	QuestionService_AcceptAnswer_FullMethodName   = "/community.content.v1.QuestionService/AcceptAnswer"
 	QuestionService_ListQuestions_FullMethodName  = "/community.content.v1.QuestionService/ListQuestions"
+	QuestionService_ListAnswers_FullMethodName    = "/community.content.v1.QuestionService/ListAnswers"
 )
 
 // QuestionServiceClient is the client API for QuestionService service.
@@ -39,6 +40,7 @@ type QuestionServiceClient interface {
 	CreateAnswer(ctx context.Context, in *CreateAnswerRequest, opts ...grpc.CallOption) (*CreateAnswerResponse, error)
 	AcceptAnswer(ctx context.Context, in *AcceptAnswerRequest, opts ...grpc.CallOption) (*AcceptAnswerResponse, error)
 	ListQuestions(ctx context.Context, in *ListQuestionsRequest, opts ...grpc.CallOption) (*ListQuestionsResponse, error)
+	ListAnswers(ctx context.Context, in *ListAnswersRequest, opts ...grpc.CallOption) (*ListAnswersResponse, error)
 }
 
 type questionServiceClient struct {
@@ -109,6 +111,16 @@ func (c *questionServiceClient) ListQuestions(ctx context.Context, in *ListQuest
 	return out, nil
 }
 
+func (c *questionServiceClient) ListAnswers(ctx context.Context, in *ListAnswersRequest, opts ...grpc.CallOption) (*ListAnswersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListAnswersResponse)
+	err := c.cc.Invoke(ctx, QuestionService_ListAnswers_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QuestionServiceServer is the server API for QuestionService service.
 // All implementations must embed UnimplementedQuestionServiceServer
 // for forward compatibility.
@@ -121,6 +133,7 @@ type QuestionServiceServer interface {
 	CreateAnswer(context.Context, *CreateAnswerRequest) (*CreateAnswerResponse, error)
 	AcceptAnswer(context.Context, *AcceptAnswerRequest) (*AcceptAnswerResponse, error)
 	ListQuestions(context.Context, *ListQuestionsRequest) (*ListQuestionsResponse, error)
+	ListAnswers(context.Context, *ListAnswersRequest) (*ListAnswersResponse, error)
 	mustEmbedUnimplementedQuestionServiceServer()
 }
 
@@ -148,6 +161,9 @@ func (UnimplementedQuestionServiceServer) AcceptAnswer(context.Context, *AcceptA
 }
 func (UnimplementedQuestionServiceServer) ListQuestions(context.Context, *ListQuestionsRequest) (*ListQuestionsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListQuestions not implemented")
+}
+func (UnimplementedQuestionServiceServer) ListAnswers(context.Context, *ListAnswersRequest) (*ListAnswersResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListAnswers not implemented")
 }
 func (UnimplementedQuestionServiceServer) mustEmbedUnimplementedQuestionServiceServer() {}
 func (UnimplementedQuestionServiceServer) testEmbeddedByValue()                         {}
@@ -278,6 +294,24 @@ func _QuestionService_ListQuestions_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _QuestionService_ListAnswers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAnswersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QuestionServiceServer).ListAnswers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: QuestionService_ListAnswers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QuestionServiceServer).ListAnswers(ctx, req.(*ListAnswersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // QuestionService_ServiceDesc is the grpc.ServiceDesc for QuestionService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -308,6 +342,10 @@ var QuestionService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListQuestions",
 			Handler:    _QuestionService_ListQuestions_Handler,
+		},
+		{
+			MethodName: "ListAnswers",
+			Handler:    _QuestionService_ListAnswers_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

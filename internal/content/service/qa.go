@@ -51,6 +51,11 @@ func (s *QAService) ListQuestions(ctx context.Context, limit, offset int) ([]mod
 	return s.repo.ListQuestions(ctx, limit, offset)
 }
 
+// ListAnswers 查询某问题的回答列表。
+func (s *QAService) ListAnswers(ctx context.Context, questionID uint64) ([]model.Answer, error) {
+	return s.repo.ListAnswers(ctx, questionID)
+}
+
 // CloseQuestion 关闭问题（仅提问者）。
 func (s *QAService) CloseQuestion(ctx context.Context, authorID, id uint64) error {
 	q, err := s.repo.FindQuestion(ctx, id)
