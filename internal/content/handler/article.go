@@ -101,3 +101,18 @@ func (h *ArticleHandler) ListTags(ctx context.Context, _ *contentv1.ListTagsRequ
 	}
 	return resp, nil
 }
+
+// ListArticles 分页查询文章。
+func (h *ArticleHandler) ListArticles(ctx context.Context, req *contentv1.ListArticlesRequest) (*contentv1.ListArticlesResponse, error) {
+	articles, err := h.svc.ListArticles(ctx, int(req.GetLimit()), int(req.GetOffset()), req.GetStatus())
+	if err != nil {
+		return nil, grpcx.ToStatus(err)
+	}
+	resp := &contentv1.ListArticlesResponse{}
+	for _, a := range articles {
+		resp.Articles = append(resp.Articles, &contentv1.ArticleBrief{
+			Id: a.ID, Title: a.Title, AuthorId: a.AuthorID, Status: string(a.Status),
+		})
+	}
+	return resp, nil
+}

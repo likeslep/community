@@ -11,6 +11,7 @@ service QuestionService {
   rpc CloseQuestion(CloseQuestionRequest) returns (CloseQuestionResponse);
   rpc CreateAnswer(CreateAnswerRequest) returns (CreateAnswerResponse);
   rpc AcceptAnswer(AcceptAnswerRequest) returns (AcceptAnswerResponse);
+  rpc ListQuestions(ListQuestionsRequest) returns (ListQuestionsResponse);
 }
 
 message CreateQuestionRequest {
@@ -58,3 +59,19 @@ message AcceptAnswerRequest {
 }
 
 message AcceptAnswerResponse {}
+
+message ListQuestionsRequest {
+  int32 limit = 1;
+  int32 offset = 2;
+}
+
+message QuestionBrief {
+  uint64 id = 1;
+  string title = 2;
+  uint64 author_id = 3;
+  string status = 4;
+}
+
+message ListQuestionsResponse {
+  repeated QuestionBrief questions = 1;
+}

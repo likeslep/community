@@ -43,6 +43,14 @@ func (s *QAService) GetQuestion(ctx context.Context, id uint64) (*model.Question
 	return s.repo.FindQuestion(ctx, id)
 }
 
+// ListQuestions 分页查询问题。
+func (s *QAService) ListQuestions(ctx context.Context, limit, offset int) ([]model.Question, error) {
+	if limit < 1 || limit > 100 {
+		limit = 20
+	}
+	return s.repo.ListQuestions(ctx, limit, offset)
+}
+
 // CloseQuestion 关闭问题（仅提问者）。
 func (s *QAService) CloseQuestion(ctx context.Context, authorID, id uint64) error {
 	q, err := s.repo.FindQuestion(ctx, id)

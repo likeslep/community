@@ -13,6 +13,7 @@ service ArticleService {
   rpc SubmitArticle(SubmitArticleRequest) returns (SubmitArticleResponse);
   rpc HideArticle(HideArticleRequest) returns (HideArticleResponse);
   rpc ListTags(ListTagsRequest) returns (ListTagsResponse);
+  rpc ListArticles(ListArticlesRequest) returns (ListArticlesResponse);
 }
 
 message CreateArticleRequest {
@@ -74,4 +75,21 @@ message ListTagsRequest {}
 
 message ListTagsResponse {
   repeated Tag tags = 1;
+}
+
+message ListArticlesRequest {
+  int32 limit = 1;
+  int32 offset = 2;
+  string status = 3;
+}
+
+message ArticleBrief {
+  uint64 id = 1;
+  string title = 2;
+  uint64 author_id = 3;
+  string status = 4;
+}
+
+message ListArticlesResponse {
+  repeated ArticleBrief articles = 1;
 }

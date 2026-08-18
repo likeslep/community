@@ -73,6 +73,10 @@ func (f *fakeQARepo) FindAnswer(_ context.Context, id uint64) (*model.Answer, er
 	return nil, ErrAnswerNotFound
 }
 
+func (f *fakeQARepo) ListQuestions(_ context.Context, _ int, _ int) ([]model.Question, error) {
+	return nil, nil
+}
+
 func (f *fakeQARepo) AcceptAnswer(_ context.Context, questionID, answerID uint64, _ kafkax.Envelope) error {
 	f.mu.Lock()
 	defer f.mu.Unlock()

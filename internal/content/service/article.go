@@ -138,6 +138,14 @@ func (s *ArticleService) ListTags(ctx context.Context) ([]model.Tag, error) {
 	return s.repo.ListTags(ctx)
 }
 
+// ListArticles 分页查询文章。
+func (s *ArticleService) ListArticles(ctx context.Context, limit, offset int, status string) ([]model.Article, error) {
+	if limit < 1 || limit > 100 {
+		limit = 20
+	}
+	return s.repo.ListArticles(ctx, limit, offset, model.Status(status))
+}
+
 // PublishArticle 审核通过后发布文章（PENDING_REVIEW → PUBLISHED）。
 func (s *ArticleService) PublishArticle(ctx context.Context, id uint64) error {
 	a, err := s.repo.FindArticle(ctx, id)

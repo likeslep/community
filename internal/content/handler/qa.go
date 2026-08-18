@@ -84,3 +84,18 @@ func (h *QuestionHandler) AcceptAnswer(ctx context.Context, req *contentv1.Accep
 	}
 	return &contentv1.AcceptAnswerResponse{}, nil
 }
+
+// ListQuestions 分页查询问题。
+func (h *QuestionHandler) ListQuestions(ctx context.Context, req *contentv1.ListQuestionsRequest) (*contentv1.ListQuestionsResponse, error) {
+	questions, err := h.svc.ListQuestions(ctx, int(req.GetLimit()), int(req.GetOffset()))
+	if err != nil {
+		return nil, grpcx.ToStatus(err)
+	}
+	resp := &contentv1.ListQuestionsResponse{}
+	for _, q := range questions {
+		resp.Questions = append(resp.Questions, &contentv1.QuestionBrief{
+			Id: q.ID, Title: q.Title, AuthorId: q.AuthorID, Status: string(q.Status),
+		})
+	}
+	return resp, nil
+}

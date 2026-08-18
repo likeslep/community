@@ -9,45 +9,105 @@ import (
 
 	adminv1 "github.com/likeslep/community/api/gen/admin/v1"
 	contentv1 "github.com/likeslep/community/api/gen/content/v1"
+	feedv1 "github.com/likeslep/community/api/gen/feed/v1"
+	interactionv1 "github.com/likeslep/community/api/gen/interaction/v1"
+	notificationv1 "github.com/likeslep/community/api/gen/notification/v1"
+	searchv1 "github.com/likeslep/community/api/gen/search/v1"
+	socialv1 "github.com/likeslep/community/api/gen/social/v1"
 	userv1 "github.com/likeslep/community/api/gen/user/v1"
 	gwmw "github.com/likeslep/community/internal/gateway/middleware"
 	"github.com/likeslep/community/pkg/grpcx"
 )
 
+// Clients 汇总所有后端服务的 gRPC 客户端。
+type Clients struct {
+	Users         userv1.UserServiceClient
+	Articles      contentv1.ArticleServiceClient
+	Questions     contentv1.QuestionServiceClient
+	Admin         adminv1.AdminServiceClient
+	Interactions  interactionv1.InteractionServiceClient
+	Comments      interactionv1.CommentServiceClient
+	Social        socialv1.SocialServiceClient
+	Search        searchv1.SearchServiceClient
+	Feed          feedv1.FeedServiceClient
+	Notifications notificationv1.NotificationServiceClient
+}
+
 // Handler 是 gateway 的 REST 处理器。
 type Handler struct {
-	users     userv1.UserServiceClient
-	articles  contentv1.ArticleServiceClient
-	questions contentv1.QuestionServiceClient
-	admin     adminv1.AdminServiceClient
+	users         userv1.UserServiceClient
+	articles      contentv1.ArticleServiceClient
+	questions     contentv1.QuestionServiceClient
+	admin         adminv1.AdminServiceClient
+	interactions  interactionv1.InteractionServiceClient
+	comments      interactionv1.CommentServiceClient
+	social        socialv1.SocialServiceClient
+	search        searchv1.SearchServiceClient
+	feed          feedv1.FeedServiceClient
+	notifications notificationv1.NotificationServiceClient
 }
 
 // New 构造。
-func New(users userv1.UserServiceClient, articles contentv1.ArticleServiceClient, questions contentv1.QuestionServiceClient, admin adminv1.AdminServiceClient) *Handler {
-	return &Handler{users: users, articles: articles, questions: questions, admin: admin}
+func New(c Clients) *Handler {
+	return &Handler{
+		users: c.Users, articles: c.Articles, questions: c.Questions, admin: c.Admin,
+		interactions: c.Interactions, comments: c.Comments, social: c.Social,
+		search: c.Search, feed: c.Feed, notifications: c.Notifications,
+	}
 }
 
-// RegisterRoutes 注册路由。auth 为受保护路由的认证中间件。
+// RegisterRoutes 注册全部路由。
 func (h *Handler) RegisterRoutes(engine *gin.Engine, auth gin.HandlerFunc) {
 	api := engine.Group("/api/v1")
+
+	// 认证
 	api.POST("/auth/register", h.Register)
 	api.POST("/auth/login", h.Login)
+
+	// 用户
 	api.GET("/users/:id", h.GetProfile)
 	api.PUT("/users/me", auth, h.UpdateProfile)
 
+	// 文章
+	api.GET("/articles", h.ListArticles)
 	api.POST("/articles", auth, h.CreateArticle)
-	api.PUT("/articles/:id", auth, h.UpdateArticle)
 	api.GET("/articles/:id", h.GetArticle)
+	api.PUT("/articles/:id", auth, h.UpdateArticle)
 	api.DELETE("/articles/:id", auth, h.DeleteArticle)
 	api.POST("/articles/:id/submit", auth, h.SubmitArticle)
 
+	// 问答
+	api.GET("/questions", h.ListQuestions)
 	api.POST("/questions", auth, h.CreateQuestion)
 	api.GET("/questions/:id", h.GetQuestion)
 	api.POST("/questions/:id/close", auth, h.CloseQuestion)
 	api.POST("/questions/:id/answers", auth, h.CreateAnswer)
 	api.POST("/questions/:id/accept", auth, h.AcceptAnswer)
 
-	// 后台管理路由（需 admin 角色）。
+	// 互动
+	api.POST("/interactions/like", auth, h.Like)
+	api.POST("/interactions/unlike", auth, h.Unlike)
+	api.POST("/interactions/collect", auth, h.Collect)
+	api.POST("/interactions/uncollect", auth, h.Uncollect)
+	api.POST("/interactions/view", h.View)
+	api.POST("/comments", auth, h.CreateComment)
+	api.GET("/comments", h.ListComments)
+
+	// 社交
+	api.POST("/users/:id/follow", auth, h.FollowUser)
+	api.DELETE("/users/:id/follow", auth, h.UnfollowUser)
+	api.POST("/tags/:id/follow", auth, h.FollowTag)
+	api.DELETE("/tags/:id/follow", auth, h.UnfollowTag)
+
+	// 搜索 / 信息流 / 通知
+	api.GET("/search", h.Search)
+	api.GET("/feed", auth, h.GetFeed)
+	api.GET("/notifications", auth, h.ListNotifications)
+	api.GET("/notifications/unread-count", auth, h.UnreadCount)
+	api.POST("/notifications/:id/read", auth, h.MarkRead)
+	api.POST("/notifications/read-all", auth, h.MarkAllRead)
+
+	// 后台管理
 	admin := api.Group("/admin", auth, gwmw.RequireAdmin())
 	admin.GET("/users", h.AdminListUsers)
 	admin.POST("/users/:id/ban", h.AdminBanUser)

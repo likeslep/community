@@ -27,4 +27,6 @@ type QARepository interface {
 	FindAnswer(ctx context.Context, id uint64) (*model.Answer, error)
 	// AcceptAnswer 设置采纳回答（清除旧采纳 + 更新问题 + outbox）在同一事务内。
 	AcceptAnswer(ctx context.Context, questionID, answerID uint64, env kafkax.Envelope) error
+	// ListQuestions 分页查询问题。
+	ListQuestions(ctx context.Context, limit, offset int) ([]model.Question, error)
 }

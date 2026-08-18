@@ -46,6 +46,13 @@ func (r *Gorm) UpdateQuestion(ctx context.Context, q *model.Question) error {
 	return r.db.WithContext(ctx).Save(q).Error
 }
 
+// ListQuestions 分页查询问题。
+func (r *Gorm) ListQuestions(ctx context.Context, limit, offset int) ([]model.Question, error) {
+	var questions []model.Question
+	err := r.db.WithContext(ctx).Order("id DESC").Limit(limit).Offset(offset).Find(&questions).Error
+	return questions, err
+}
+
 // CreateAnswer 创建回答 + outbox。
 func (r *Gorm) CreateAnswer(ctx context.Context, a *model.Answer, build service.BuildAnswer) error {
 	return r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {

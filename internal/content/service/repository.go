@@ -30,4 +30,6 @@ type Repository interface {
 	ListTags(ctx context.Context) ([]model.Tag, error)
 	// UpdateArticleStatus 更新文章状态（管理员隐藏等）。
 	UpdateArticleStatus(ctx context.Context, id uint64, status model.Status) error
+	// ListArticles 分页查询文章（status 为空查全部）。
+	ListArticles(ctx context.Context, limit, offset int, status model.Status) ([]model.Article, error)
 }

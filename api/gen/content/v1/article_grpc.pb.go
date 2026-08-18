@@ -26,6 +26,7 @@ const (
 	ArticleService_SubmitArticle_FullMethodName = "/community.content.v1.ArticleService/SubmitArticle"
 	ArticleService_HideArticle_FullMethodName   = "/community.content.v1.ArticleService/HideArticle"
 	ArticleService_ListTags_FullMethodName      = "/community.content.v1.ArticleService/ListTags"
+	ArticleService_ListArticles_FullMethodName  = "/community.content.v1.ArticleService/ListArticles"
 )
 
 // ArticleServiceClient is the client API for ArticleService service.
@@ -41,6 +42,7 @@ type ArticleServiceClient interface {
 	SubmitArticle(ctx context.Context, in *SubmitArticleRequest, opts ...grpc.CallOption) (*SubmitArticleResponse, error)
 	HideArticle(ctx context.Context, in *HideArticleRequest, opts ...grpc.CallOption) (*HideArticleResponse, error)
 	ListTags(ctx context.Context, in *ListTagsRequest, opts ...grpc.CallOption) (*ListTagsResponse, error)
+	ListArticles(ctx context.Context, in *ListArticlesRequest, opts ...grpc.CallOption) (*ListArticlesResponse, error)
 }
 
 type articleServiceClient struct {
@@ -121,6 +123,16 @@ func (c *articleServiceClient) ListTags(ctx context.Context, in *ListTagsRequest
 	return out, nil
 }
 
+func (c *articleServiceClient) ListArticles(ctx context.Context, in *ListArticlesRequest, opts ...grpc.CallOption) (*ListArticlesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListArticlesResponse)
+	err := c.cc.Invoke(ctx, ArticleService_ListArticles_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ArticleServiceServer is the server API for ArticleService service.
 // All implementations must embed UnimplementedArticleServiceServer
 // for forward compatibility.
@@ -134,6 +146,7 @@ type ArticleServiceServer interface {
 	SubmitArticle(context.Context, *SubmitArticleRequest) (*SubmitArticleResponse, error)
 	HideArticle(context.Context, *HideArticleRequest) (*HideArticleResponse, error)
 	ListTags(context.Context, *ListTagsRequest) (*ListTagsResponse, error)
+	ListArticles(context.Context, *ListArticlesRequest) (*ListArticlesResponse, error)
 	mustEmbedUnimplementedArticleServiceServer()
 }
 
@@ -164,6 +177,9 @@ func (UnimplementedArticleServiceServer) HideArticle(context.Context, *HideArtic
 }
 func (UnimplementedArticleServiceServer) ListTags(context.Context, *ListTagsRequest) (*ListTagsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListTags not implemented")
+}
+func (UnimplementedArticleServiceServer) ListArticles(context.Context, *ListArticlesRequest) (*ListArticlesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListArticles not implemented")
 }
 func (UnimplementedArticleServiceServer) mustEmbedUnimplementedArticleServiceServer() {}
 func (UnimplementedArticleServiceServer) testEmbeddedByValue()                        {}
@@ -312,6 +328,24 @@ func _ArticleService_ListTags_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ArticleService_ListArticles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListArticlesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArticleServiceServer).ListArticles(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ArticleService_ListArticles_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArticleServiceServer).ListArticles(ctx, req.(*ListArticlesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ArticleService_ServiceDesc is the grpc.ServiceDesc for ArticleService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -346,6 +380,10 @@ var ArticleService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListTags",
 			Handler:    _ArticleService_ListTags_Handler,
+		},
+		{
+			MethodName: "ListArticles",
+			Handler:    _ArticleService_ListArticles_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

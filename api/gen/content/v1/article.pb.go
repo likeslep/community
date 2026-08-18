@@ -729,6 +729,178 @@ func (x *ListTagsResponse) GetTags() []*Tag {
 	return nil
 }
 
+type ListArticlesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Limit         int32                  `protobuf:"varint,1,opt,name=limit,proto3" json:"limit,omitempty"`
+	Offset        int32                  `protobuf:"varint,2,opt,name=offset,proto3" json:"offset,omitempty"`
+	Status        string                 `protobuf:"bytes,3,opt,name=status,proto3" json:"status,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListArticlesRequest) Reset() {
+	*x = ListArticlesRequest{}
+	mi := &file_api_proto_content_v1_article_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListArticlesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListArticlesRequest) ProtoMessage() {}
+
+func (x *ListArticlesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_proto_content_v1_article_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListArticlesRequest.ProtoReflect.Descriptor instead.
+func (*ListArticlesRequest) Descriptor() ([]byte, []int) {
+	return file_api_proto_content_v1_article_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *ListArticlesRequest) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+func (x *ListArticlesRequest) GetOffset() int32 {
+	if x != nil {
+		return x.Offset
+	}
+	return 0
+}
+
+func (x *ListArticlesRequest) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+type ArticleBrief struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	AuthorId      uint64                 `protobuf:"varint,3,opt,name=author_id,json=authorId,proto3" json:"author_id,omitempty"`
+	Status        string                 `protobuf:"bytes,4,opt,name=status,proto3" json:"status,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ArticleBrief) Reset() {
+	*x = ArticleBrief{}
+	mi := &file_api_proto_content_v1_article_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ArticleBrief) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ArticleBrief) ProtoMessage() {}
+
+func (x *ArticleBrief) ProtoReflect() protoreflect.Message {
+	mi := &file_api_proto_content_v1_article_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ArticleBrief.ProtoReflect.Descriptor instead.
+func (*ArticleBrief) Descriptor() ([]byte, []int) {
+	return file_api_proto_content_v1_article_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *ArticleBrief) GetId() uint64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *ArticleBrief) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *ArticleBrief) GetAuthorId() uint64 {
+	if x != nil {
+		return x.AuthorId
+	}
+	return 0
+}
+
+func (x *ArticleBrief) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+type ListArticlesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Articles      []*ArticleBrief        `protobuf:"bytes,1,rep,name=articles,proto3" json:"articles,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListArticlesResponse) Reset() {
+	*x = ListArticlesResponse{}
+	mi := &file_api_proto_content_v1_article_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListArticlesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListArticlesResponse) ProtoMessage() {}
+
+func (x *ListArticlesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_proto_content_v1_article_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListArticlesResponse.ProtoReflect.Descriptor instead.
+func (*ListArticlesResponse) Descriptor() ([]byte, []int) {
+	return file_api_proto_content_v1_article_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *ListArticlesResponse) GetArticles() []*ArticleBrief {
+	if x != nil {
+		return x.Articles
+	}
+	return nil
+}
+
 var File_api_proto_content_v1_article_proto protoreflect.FileDescriptor
 
 const file_api_proto_content_v1_article_proto_rawDesc = "" +
@@ -769,7 +941,18 @@ const file_api_proto_content_v1_article_proto_rawDesc = "" +
 	"\x04name\x18\x02 \x01(\tR\x04name\"\x11\n" +
 	"\x0fListTagsRequest\"A\n" +
 	"\x10ListTagsResponse\x12-\n" +
-	"\x04tags\x18\x01 \x03(\v2\x19.community.content.v1.TagR\x04tags2\xd8\x05\n" +
+	"\x04tags\x18\x01 \x03(\v2\x19.community.content.v1.TagR\x04tags\"[\n" +
+	"\x13ListArticlesRequest\x12\x14\n" +
+	"\x05limit\x18\x01 \x01(\x05R\x05limit\x12\x16\n" +
+	"\x06offset\x18\x02 \x01(\x05R\x06offset\x12\x16\n" +
+	"\x06status\x18\x03 \x01(\tR\x06status\"i\n" +
+	"\fArticleBrief\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x04R\x02id\x12\x14\n" +
+	"\x05title\x18\x02 \x01(\tR\x05title\x12\x1b\n" +
+	"\tauthor_id\x18\x03 \x01(\x04R\bauthorId\x12\x16\n" +
+	"\x06status\x18\x04 \x01(\tR\x06status\"V\n" +
+	"\x14ListArticlesResponse\x12>\n" +
+	"\barticles\x18\x01 \x03(\v2\".community.content.v1.ArticleBriefR\barticles2\xbf\x06\n" +
 	"\x0eArticleService\x12h\n" +
 	"\rCreateArticle\x12*.community.content.v1.CreateArticleRequest\x1a+.community.content.v1.CreateArticleResponse\x12h\n" +
 	"\rUpdateArticle\x12*.community.content.v1.UpdateArticleRequest\x1a+.community.content.v1.UpdateArticleResponse\x12_\n" +
@@ -778,7 +961,8 @@ const file_api_proto_content_v1_article_proto_rawDesc = "" +
 	"\rDeleteArticle\x12*.community.content.v1.DeleteArticleRequest\x1a+.community.content.v1.DeleteArticleResponse\x12h\n" +
 	"\rSubmitArticle\x12*.community.content.v1.SubmitArticleRequest\x1a+.community.content.v1.SubmitArticleResponse\x12b\n" +
 	"\vHideArticle\x12(.community.content.v1.HideArticleRequest\x1a).community.content.v1.HideArticleResponse\x12Y\n" +
-	"\bListTags\x12%.community.content.v1.ListTagsRequest\x1a&.community.content.v1.ListTagsResponseB<Z:github.com/likeslep/community/api/gen/content/v1;contentv1b\x06proto3"
+	"\bListTags\x12%.community.content.v1.ListTagsRequest\x1a&.community.content.v1.ListTagsResponse\x12e\n" +
+	"\fListArticles\x12).community.content.v1.ListArticlesRequest\x1a*.community.content.v1.ListArticlesResponseB<Z:github.com/likeslep/community/api/gen/content/v1;contentv1b\x06proto3"
 
 var (
 	file_api_proto_content_v1_article_proto_rawDescOnce sync.Once
@@ -792,7 +976,7 @@ func file_api_proto_content_v1_article_proto_rawDescGZIP() []byte {
 	return file_api_proto_content_v1_article_proto_rawDescData
 }
 
-var file_api_proto_content_v1_article_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
+var file_api_proto_content_v1_article_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_api_proto_content_v1_article_proto_goTypes = []any{
 	(*CreateArticleRequest)(nil),  // 0: community.content.v1.CreateArticleRequest
 	(*CreateArticleResponse)(nil), // 1: community.content.v1.CreateArticleResponse
@@ -809,28 +993,34 @@ var file_api_proto_content_v1_article_proto_goTypes = []any{
 	(*Tag)(nil),                   // 12: community.content.v1.Tag
 	(*ListTagsRequest)(nil),       // 13: community.content.v1.ListTagsRequest
 	(*ListTagsResponse)(nil),      // 14: community.content.v1.ListTagsResponse
+	(*ListArticlesRequest)(nil),   // 15: community.content.v1.ListArticlesRequest
+	(*ArticleBrief)(nil),          // 16: community.content.v1.ArticleBrief
+	(*ListArticlesResponse)(nil),  // 17: community.content.v1.ListArticlesResponse
 }
 var file_api_proto_content_v1_article_proto_depIdxs = []int32{
 	12, // 0: community.content.v1.ListTagsResponse.tags:type_name -> community.content.v1.Tag
-	0,  // 1: community.content.v1.ArticleService.CreateArticle:input_type -> community.content.v1.CreateArticleRequest
-	2,  // 2: community.content.v1.ArticleService.UpdateArticle:input_type -> community.content.v1.UpdateArticleRequest
-	4,  // 3: community.content.v1.ArticleService.GetArticle:input_type -> community.content.v1.GetArticleRequest
-	6,  // 4: community.content.v1.ArticleService.DeleteArticle:input_type -> community.content.v1.DeleteArticleRequest
-	8,  // 5: community.content.v1.ArticleService.SubmitArticle:input_type -> community.content.v1.SubmitArticleRequest
-	10, // 6: community.content.v1.ArticleService.HideArticle:input_type -> community.content.v1.HideArticleRequest
-	13, // 7: community.content.v1.ArticleService.ListTags:input_type -> community.content.v1.ListTagsRequest
-	1,  // 8: community.content.v1.ArticleService.CreateArticle:output_type -> community.content.v1.CreateArticleResponse
-	3,  // 9: community.content.v1.ArticleService.UpdateArticle:output_type -> community.content.v1.UpdateArticleResponse
-	5,  // 10: community.content.v1.ArticleService.GetArticle:output_type -> community.content.v1.GetArticleResponse
-	7,  // 11: community.content.v1.ArticleService.DeleteArticle:output_type -> community.content.v1.DeleteArticleResponse
-	9,  // 12: community.content.v1.ArticleService.SubmitArticle:output_type -> community.content.v1.SubmitArticleResponse
-	11, // 13: community.content.v1.ArticleService.HideArticle:output_type -> community.content.v1.HideArticleResponse
-	14, // 14: community.content.v1.ArticleService.ListTags:output_type -> community.content.v1.ListTagsResponse
-	8,  // [8:15] is the sub-list for method output_type
-	1,  // [1:8] is the sub-list for method input_type
-	1,  // [1:1] is the sub-list for extension type_name
-	1,  // [1:1] is the sub-list for extension extendee
-	0,  // [0:1] is the sub-list for field type_name
+	16, // 1: community.content.v1.ListArticlesResponse.articles:type_name -> community.content.v1.ArticleBrief
+	0,  // 2: community.content.v1.ArticleService.CreateArticle:input_type -> community.content.v1.CreateArticleRequest
+	2,  // 3: community.content.v1.ArticleService.UpdateArticle:input_type -> community.content.v1.UpdateArticleRequest
+	4,  // 4: community.content.v1.ArticleService.GetArticle:input_type -> community.content.v1.GetArticleRequest
+	6,  // 5: community.content.v1.ArticleService.DeleteArticle:input_type -> community.content.v1.DeleteArticleRequest
+	8,  // 6: community.content.v1.ArticleService.SubmitArticle:input_type -> community.content.v1.SubmitArticleRequest
+	10, // 7: community.content.v1.ArticleService.HideArticle:input_type -> community.content.v1.HideArticleRequest
+	13, // 8: community.content.v1.ArticleService.ListTags:input_type -> community.content.v1.ListTagsRequest
+	15, // 9: community.content.v1.ArticleService.ListArticles:input_type -> community.content.v1.ListArticlesRequest
+	1,  // 10: community.content.v1.ArticleService.CreateArticle:output_type -> community.content.v1.CreateArticleResponse
+	3,  // 11: community.content.v1.ArticleService.UpdateArticle:output_type -> community.content.v1.UpdateArticleResponse
+	5,  // 12: community.content.v1.ArticleService.GetArticle:output_type -> community.content.v1.GetArticleResponse
+	7,  // 13: community.content.v1.ArticleService.DeleteArticle:output_type -> community.content.v1.DeleteArticleResponse
+	9,  // 14: community.content.v1.ArticleService.SubmitArticle:output_type -> community.content.v1.SubmitArticleResponse
+	11, // 15: community.content.v1.ArticleService.HideArticle:output_type -> community.content.v1.HideArticleResponse
+	14, // 16: community.content.v1.ArticleService.ListTags:output_type -> community.content.v1.ListTagsResponse
+	17, // 17: community.content.v1.ArticleService.ListArticles:output_type -> community.content.v1.ListArticlesResponse
+	10, // [10:18] is the sub-list for method output_type
+	2,  // [2:10] is the sub-list for method input_type
+	2,  // [2:2] is the sub-list for extension type_name
+	2,  // [2:2] is the sub-list for extension extendee
+	0,  // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_api_proto_content_v1_article_proto_init() }
@@ -844,7 +1034,7 @@ func file_api_proto_content_v1_article_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_proto_content_v1_article_proto_rawDesc), len(file_api_proto_content_v1_article_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   15,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

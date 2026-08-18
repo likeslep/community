@@ -129,6 +129,17 @@ func (r *Gorm) UpdateArticleStatus(ctx context.Context, id uint64, status model.
 	return r.db.WithContext(ctx).Model(&model.Article{}).Where("id = ?", id).Update("status", status).Error
 }
 
+// ListArticles 分页查询文章。
+func (r *Gorm) ListArticles(ctx context.Context, limit, offset int, status model.Status) ([]model.Article, error) {
+	var articles []model.Article
+	q := r.db.WithContext(ctx).Order("id DESC").Limit(limit).Offset(offset)
+	if status != "" {
+		q = q.Where("status = ?", status)
+	}
+	err := q.Find(&articles).Error
+	return articles, err
+}
+
 // bindTags 查找或创建标签并绑定到文章。
 func bindTags(ctx context.Context, tx *gorm.DB, articleID uint64, names []string) error {
 	for _, raw := range names {

@@ -11,6 +11,21 @@ import (
 	"github.com/likeslep/community/pkg/grpcx"
 )
 
+// ListArticles 分页查询文章（默认 published）。
+func (h *Handler) ListArticles(c *gin.Context) {
+	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "20"))
+	offset, _ := strconv.Atoi(c.DefaultQuery("offset", "0"))
+	status := c.DefaultQuery("status", "published")
+	resp, err := h.articles.ListArticles(c.Request.Context(), &contentv1.ListArticlesRequest{
+		Limit: int32(limit), Offset: int32(offset), Status: status,
+	})
+	if err != nil {
+		writeErr(c, err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"code": 0, "message": "success", "data": resp})
+}
+
 // CreateArticle 创建文章（受保护）。
 func (h *Handler) CreateArticle(c *gin.Context) {
 	var req struct {

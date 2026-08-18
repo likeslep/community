@@ -81,6 +81,10 @@ func (f *fakeRepo) ListTags(_ context.Context) ([]model.Tag, error) { return nil
 
 func (f *fakeRepo) UpdateArticleStatus(_ context.Context, _ uint64, _ model.Status) error { return nil }
 
+func (f *fakeRepo) ListArticles(_ context.Context, _ int, _ int, _ model.Status) ([]model.Article, error) {
+	return nil, nil
+}
+
 func newTestArticleService() *ArticleService {
 	return NewArticleService(newFakeRepo(), Config{Producer: "content-service"})
 }

@@ -11,6 +11,20 @@ import (
 	"github.com/likeslep/community/pkg/grpcx"
 )
 
+// ListQuestions 分页查询问题。
+func (h *Handler) ListQuestions(c *gin.Context) {
+	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "20"))
+	offset, _ := strconv.Atoi(c.DefaultQuery("offset", "0"))
+	resp, err := h.questions.ListQuestions(c.Request.Context(), &contentv1.ListQuestionsRequest{
+		Limit: int32(limit), Offset: int32(offset),
+	})
+	if err != nil {
+		writeErr(c, err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"code": 0, "message": "success", "data": resp})
+}
+
 // CreateQuestion 提问（受保护）。
 func (h *Handler) CreateQuestion(c *gin.Context) {
 	var req struct {
