@@ -41,3 +41,14 @@ func extractToken(header string) string {
 	}
 	return ""
 }
+
+// RequireAdmin 校验当前用户角色为 admin（plan.md §12）。
+func RequireAdmin() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		if c.GetString(CtxRole) != "admin" {
+			c.AbortWithStatusJSON(http.StatusForbidden, gin.H{"code": 403, "message": "需要管理员权限"})
+			return
+		}
+		c.Next()
+	}
+}

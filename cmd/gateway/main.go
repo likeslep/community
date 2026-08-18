@@ -8,6 +8,7 @@ import (
 
 	"go.uber.org/zap"
 
+	adminv1 "github.com/likeslep/community/api/gen/admin/v1"
 	contentv1 "github.com/likeslep/community/api/gen/content/v1"
 	userv1 "github.com/likeslep/community/api/gen/user/v1"
 	"github.com/likeslep/community/internal/gateway/handler"
@@ -24,6 +25,7 @@ func main() {
 		HTTPAddr        string        `env:"HTTP_ADDR" default:":8080"`
 		UserGRPCAddr    string        `env:"USER_GRPC_ADDR" default:"localhost:9090"`
 		ContentGRPCAddr string        `env:"CONTENT_GRPC_ADDR" default:"localhost:9091"`
+		AdminGRPCAddr   string        `env:"ADMIN_GRPC_ADDR" default:"localhost:9095"`
 		JWTSecret       string        `env:"JWT_SECRET" required:"true"`
 		TraceEndpoint   string        `env:"TRACE_ENDPOINT" default:""`
 		LogLevel        string        `env:"LOG_LEVEL" default:"info"`
@@ -60,10 +62,17 @@ func main() {
 	}
 	defer contentConn.Close()
 
+	adminConn, err := grpcx.Dial(cfg.AdminGRPCAddr)
+	if err != nil {
+		lg.Fatal("连接 admin-service 失败", zap.Error(err))
+	}
+	defer adminConn.Close()
+
 	h := handler.New(
 		userv1.NewUserServiceClient(userConn),
 		contentv1.NewArticleServiceClient(contentConn),
 		contentv1.NewQuestionServiceClient(contentConn),
+		adminv1.NewAdminServiceClient(adminConn),
 	)
 	srv := server.New(server.Config{Addr: cfg.HTTPAddr, ShutdownWait: cfg.ShutdownWait}, lg)
 	h.RegisterRoutes(srv.Engine(), gwmw.Auth([]byte(cfg.JWTSecret)))

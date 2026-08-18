@@ -7,6 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	adminv1 "github.com/likeslep/community/api/gen/admin/v1"
 	contentv1 "github.com/likeslep/community/api/gen/content/v1"
 	userv1 "github.com/likeslep/community/api/gen/user/v1"
 	gwmw "github.com/likeslep/community/internal/gateway/middleware"
@@ -18,11 +19,12 @@ type Handler struct {
 	users     userv1.UserServiceClient
 	articles  contentv1.ArticleServiceClient
 	questions contentv1.QuestionServiceClient
+	admin     adminv1.AdminServiceClient
 }
 
 // New 构造。
-func New(users userv1.UserServiceClient, articles contentv1.ArticleServiceClient, questions contentv1.QuestionServiceClient) *Handler {
-	return &Handler{users: users, articles: articles, questions: questions}
+func New(users userv1.UserServiceClient, articles contentv1.ArticleServiceClient, questions contentv1.QuestionServiceClient, admin adminv1.AdminServiceClient) *Handler {
+	return &Handler{users: users, articles: articles, questions: questions, admin: admin}
 }
 
 // RegisterRoutes 注册路由。auth 为受保护路由的认证中间件。
@@ -44,6 +46,20 @@ func (h *Handler) RegisterRoutes(engine *gin.Engine, auth gin.HandlerFunc) {
 	api.POST("/questions/:id/close", auth, h.CloseQuestion)
 	api.POST("/questions/:id/answers", auth, h.CreateAnswer)
 	api.POST("/questions/:id/accept", auth, h.AcceptAnswer)
+
+	// 后台管理路由（需 admin 角色）。
+	admin := api.Group("/admin", auth, gwmw.RequireAdmin())
+	admin.GET("/users", h.AdminListUsers)
+	admin.POST("/users/:id/ban", h.AdminBanUser)
+	admin.POST("/articles/:id/hide", h.AdminHideArticle)
+	admin.DELETE("/comments/:id", h.AdminDeleteComment)
+	admin.GET("/tags", h.AdminListTags)
+	admin.GET("/sensitive-words", h.AdminListSensitiveWords)
+	admin.POST("/sensitive-words", h.AdminCreateSensitiveWord)
+	admin.GET("/reports", h.AdminListReports)
+	admin.POST("/reports/:id/handle", h.AdminHandleReport)
+	admin.GET("/audit-logs", h.AdminListAuditLogs)
+	admin.GET("/statistics", h.AdminStatistics)
 }
 
 // Register 处理注册。
