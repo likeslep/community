@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package community.content.v1;
+
+option go_package = "github.com/likeslep/community/api/gen/content/v1;contentv1";
+
+// QuestionService 提供问题与回答能力。
+service QuestionService {
+  rpc CreateQuestion(CreateQuestionRequest) returns (CreateQuestionResponse);
+  rpc GetQuestion(GetQuestionRequest) returns (GetQuestionResponse);
+  rpc CloseQuestion(CloseQuestionRequest) returns (CloseQuestionResponse);
+  rpc CreateAnswer(CreateAnswerRequest) returns (CreateAnswerResponse);
+  rpc AcceptAnswer(AcceptAnswerRequest) returns (AcceptAnswerResponse);
+}
+
+message CreateQuestionRequest {
+  string title = 1;
+  string content = 2;
+  repeated string tags = 3;
+}
+
+message CreateQuestionResponse {
+  uint64 id = 1;
+  string status = 2;
+}
+
+message GetQuestionRequest {
+  uint64 id = 1;
+}
+
+message GetQuestionResponse {
+  uint64 id = 1;
+  uint64 author_id = 2;
+  string title = 3;
+  string content = 4;
+  string status = 5;
+  uint64 accepted_answer_id = 6;
+}
+
+message CloseQuestionRequest {
+  uint64 id = 1;
+}
+
+message CloseQuestionResponse {}
+
+message CreateAnswerRequest {
+  uint64 question_id = 1;
+  string content = 2;
+}
+
+message CreateAnswerResponse {
+  uint64 id = 1;
+}
+
+message AcceptAnswerRequest {
+  uint64 question_id = 1;
+  uint64 answer_id = 2;
+}
+
+message AcceptAnswerResponse {}

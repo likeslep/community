@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package community.feed.v1;
+
+option go_package = "github.com/likeslep/community/api/gen/feed/v1;feedv1";
+
+service FeedService {
+  rpc GetFeed(GetFeedRequest) returns (GetFeedResponse);
+}
+
+message FeedItem {
+  string id = 1;
+  string type = 2;
+  string title = 3;
+  uint64 author_id = 4;
+}
+
+message GetFeedRequest {
+  int32 limit = 1;
+}
+
+message GetFeedResponse {
+  repeated FeedItem items = 1;
+}

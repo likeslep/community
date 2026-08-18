@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package community.notification.v1;
+
+option go_package = "github.com/likeslep/community/api/gen/notification/v1;notificationv1";
+
+service NotificationService {
+  rpc ListNotifications(ListNotificationsRequest) returns (ListNotificationsResponse);
+  rpc UnreadCount(UnreadCountRequest) returns (UnreadCountResponse);
+  rpc MarkRead(MarkReadRequest) returns (MarkReadResponse);
+  rpc MarkAllRead(MarkAllReadRequest) returns (MarkAllReadResponse);
+}
+
+message Notification {
+  uint64 id = 1;
+  uint64 actor_id = 2;
+  string type = 3;
+  string target_type = 4;
+  uint64 target_id = 5;
+  string content = 6;
+  bool read = 7;
+}
+
+message ListNotificationsRequest {
+  int32 limit = 1;
+}
+
+message ListNotificationsResponse {
+  repeated Notification notifications = 1;
+}
+
+message UnreadCountRequest {}
+
+message UnreadCountResponse {
+  int64 count = 1;
+}
+
+message MarkReadRequest {
+  uint64 id = 1;
+}
+
+message MarkReadResponse {}
+
+message MarkAllReadRequest {}
+
+message MarkAllReadResponse {}

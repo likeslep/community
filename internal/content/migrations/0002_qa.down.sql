@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS question_tags;
+DROP TABLE IF EXISTS answers;
+DROP TABLE IF EXISTS questions;

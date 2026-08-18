@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS outbox_events;
+DROP TABLE IF EXISTS tag_follows;
+DROP TABLE IF EXISTS follows;

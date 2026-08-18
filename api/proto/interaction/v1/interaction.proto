@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package community.interaction.v1;
+
+option go_package = "github.com/likeslep/community/api/gen/interaction/v1;interactionv1";
+
+// InteractionService 提供点赞/收藏/浏览互动。
+service InteractionService {
+  rpc Like(LikeRequest) returns (LikeResponse);
+  rpc Unlike(UnlikeRequest) returns (UnlikeResponse);
+  rpc Collect(CollectRequest) returns (CollectResponse);
+  rpc Uncollect(UncollectRequest) returns (UncollectResponse);
+  rpc View(ViewRequest) returns (ViewResponse);
+}
+
+// CommentService 提供评论。
+service CommentService {
+  rpc CreateComment(CreateCommentRequest) returns (CreateCommentResponse);
+  rpc ListComments(ListCommentsRequest) returns (ListCommentsResponse);
+  rpc DeleteComment(DeleteCommentRequest) returns (DeleteCommentResponse);
+}
+
+message Target {
+  string target_type = 1;
+  uint64 target_id = 2;
+}
+
+message LikeRequest {
+  string target_type = 1;
+  uint64 target_id = 2;
+}
+
+message LikeResponse {}
+
+message UnlikeRequest {
+  string target_type = 1;
+  uint64 target_id = 2;
+}
+
+message UnlikeResponse {}
+
+message CollectRequest {
+  string target_type = 1;
+  uint64 target_id = 2;
+}
+
+message CollectResponse {}
+
+message UncollectRequest {
+  string target_type = 1;
+  uint64 target_id = 2;
+}
+
+message UncollectResponse {}
+
+message ViewRequest {
+  string target_type = 1;
+  uint64 target_id = 2;
+}
+
+message ViewResponse {
+  int64 view_count = 1;
+}
+
+message CreateCommentRequest {
+  string target_type = 1;
+  uint64 target_id = 2;
+  string content = 3;
+}
+
+message CreateCommentResponse {
+  uint64 id = 1;
+}
+
+message ListCommentsRequest {
+  string target_type = 1;
+  uint64 target_id = 2;
+}
+
+message Comment {
+  uint64 id = 1;
+  uint64 user_id = 2;
+  string target_type = 3;
+  uint64 target_id = 4;
+  string content = 5;
+}
+
+message ListCommentsResponse {
+  repeated Comment comments = 1;
+}
+
+message DeleteCommentRequest {
+  uint64 id = 1;
+}
+
+message DeleteCommentResponse {}

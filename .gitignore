@@ -1,0 +1,28 @@
+# Binaries
+/bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go
+vendor/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Environment / secrets
+.env
+.env.local
+*.local
+
+# Build artifacts
+dist/
+
+# OS
+.DS_Store

@@ -1,0 +1,119 @@
+syntax = "proto3";
+
+package community.moderation.v1;
+
+option go_package = "github.com/likeslep/community/api/gen/moderation/v1;moderationv1";
+
+// SensitiveWordService 提供敏感词检测与维护。
+service SensitiveWordService {
+  rpc CheckText(CheckTextRequest) returns (CheckTextResponse);
+  rpc CreateSensitiveWord(CreateSensitiveWordRequest) returns (CreateSensitiveWordResponse);
+  rpc ListSensitiveWords(ListSensitiveWordsRequest) returns (ListSensitiveWordsResponse);
+}
+
+// ModerationService 提供人工审核。
+service ModerationService {
+  rpc ListTasks(ListTasksRequest) returns (ListTasksResponse);
+  rpc Approve(ApproveRequest) returns (ApproveResponse);
+  rpc Reject(RejectRequest) returns (RejectResponse);
+}
+
+// ReportService 提供举报。
+service ReportService {
+  rpc CreateReport(CreateReportRequest) returns (CreateReportResponse);
+  rpc ListReports(ListReportsRequest) returns (ListReportsResponse);
+  rpc HandleReport(HandleReportRequest) returns (HandleReportResponse);
+}
+
+message CheckTextRequest {
+  string text = 1;
+}
+
+message CheckTextResponse {
+  string action = 1;
+  repeated string matched = 2;
+}
+
+message CreateSensitiveWordRequest {
+  string word = 1;
+  string level = 2;
+}
+
+message CreateSensitiveWordResponse {
+  uint64 id = 1;
+}
+
+message SensitiveWord {
+  uint64 id = 1;
+  string word = 2;
+  string level = 3;
+}
+
+message ListSensitiveWordsRequest {}
+
+message ListSensitiveWordsResponse {
+  repeated SensitiveWord words = 1;
+}
+
+message ModerationTask {
+  uint64 id = 1;
+  string aggregate_type = 2;
+  string aggregate_id = 3;
+  string content = 4;
+  string status = 5;
+}
+
+message ListTasksRequest {
+  int32 limit = 1;
+}
+
+message ListTasksResponse {
+  repeated ModerationTask tasks = 1;
+}
+
+message ApproveRequest {
+  uint64 id = 1;
+}
+
+message ApproveResponse {}
+
+message RejectRequest {
+  uint64 id = 1;
+  string reason = 2;
+}
+
+message RejectResponse {}
+
+message Report {
+  uint64 id = 1;
+  uint64 reporter_id = 2;
+  string target_type = 3;
+  uint64 target_id = 4;
+  string reason = 5;
+  string status = 6;
+}
+
+message CreateReportRequest {
+  string target_type = 1;
+  uint64 target_id = 2;
+  string reason = 3;
+}
+
+message CreateReportResponse {
+  uint64 id = 1;
+}
+
+message ListReportsRequest {
+  int32 limit = 1;
+}
+
+message ListReportsResponse {
+  repeated Report reports = 1;
+}
+
+message HandleReportRequest {
+  uint64 id = 1;
+  string action = 2;
+}
+
+message HandleReportResponse {}

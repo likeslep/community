@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package community.search.v1;
+
+option go_package = "github.com/likeslep/community/api/gen/search/v1;searchv1";
+
+service SearchService {
+  rpc Search(SearchRequest) returns (SearchResponse);
+  rpc Rebuild(RebuildRequest) returns (RebuildResponse);
+}
+
+message SearchRequest {
+  string keyword = 1;
+  string type = 2;      // article / question / answer（空=全部）
+  repeated string tags = 3;
+  int32 page = 4;
+  int32 page_size = 5;
+}
+
+message SearchResult {
+  string id = 1;
+  string type = 2;
+  string title = 3;
+  string snippet = 4;
+  uint64 author_id = 5;
+}
+
+message SearchResponse {
+  repeated SearchResult results = 1;
+  int64 total = 2;
+}
+
+message RebuildRequest {}
+
+message RebuildResponse {}

@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package community.social.v1;
+
+option go_package = "github.com/likeslep/community/api/gen/social/v1;socialv1";
+
+service SocialService {
+  rpc FollowUser(FollowUserRequest) returns (FollowUserResponse);
+  rpc UnfollowUser(UnfollowUserRequest) returns (UnfollowUserResponse);
+  rpc FollowTag(FollowTagRequest) returns (FollowTagResponse);
+  rpc UnfollowTag(UnfollowTagRequest) returns (UnfollowTagResponse);
+  rpc ListFollowing(ListFollowingRequest) returns (ListFollowingResponse);
+  rpc ListFollowers(ListFollowersRequest) returns (ListFollowersResponse);
+}
+
+message FollowUserRequest {
+  uint64 followee_id = 1;
+}
+
+message FollowUserResponse {}
+
+message UnfollowUserRequest {
+  uint64 followee_id = 1;
+}
+
+message UnfollowUserResponse {}
+
+message FollowTagRequest {
+  uint64 tag_id = 1;
+}
+
+message FollowTagResponse {}
+
+message UnfollowTagRequest {
+  uint64 tag_id = 1;
+}
+
+message UnfollowTagResponse {}
+
+message ListFollowingRequest {
+  uint64 user_id = 1;
+}
+
+message ListFollowingResponse {
+  repeated uint64 user_ids = 1;
+}
+
+message ListFollowersRequest {
+  uint64 user_id = 1;
+}
+
+message ListFollowersResponse {
+  repeated uint64 user_ids = 1;
+}

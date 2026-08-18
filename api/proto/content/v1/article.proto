@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package community.content.v1;
+
+option go_package = "github.com/likeslep/community/api/gen/content/v1;contentv1";
+
+// ArticleService 提供文章创建/编辑/删除/提交审核能力。
+service ArticleService {
+  rpc CreateArticle(CreateArticleRequest) returns (CreateArticleResponse);
+  rpc UpdateArticle(UpdateArticleRequest) returns (UpdateArticleResponse);
+  rpc GetArticle(GetArticleRequest) returns (GetArticleResponse);
+  rpc DeleteArticle(DeleteArticleRequest) returns (DeleteArticleResponse);
+  rpc SubmitArticle(SubmitArticleRequest) returns (SubmitArticleResponse);
+  rpc HideArticle(HideArticleRequest) returns (HideArticleResponse);
+  rpc ListTags(ListTagsRequest) returns (ListTagsResponse);
+}
+
+message CreateArticleRequest {
+  string title = 1;
+  string content = 2;
+  repeated string tags = 3;
+}
+
+message CreateArticleResponse {
+  uint64 id = 1;
+  string status = 2;
+}
+
+message UpdateArticleRequest {
+  uint64 id = 1;
+  string title = 2;
+  string content = 3;
+}
+
+message UpdateArticleResponse {}
+
+message GetArticleRequest {
+  uint64 id = 1;
+}
+
+message GetArticleResponse {
+  uint64 id = 1;
+  uint64 author_id = 2;
+  string title = 3;
+  string content = 4;
+  string status = 5;
+  int32 version = 6;
+}
+
+message DeleteArticleRequest {
+  uint64 id = 1;
+}
+
+message DeleteArticleResponse {}
+
+message SubmitArticleRequest {
+  uint64 id = 1;
+}
+
+message SubmitArticleResponse {}
+
+message HideArticleRequest {
+  uint64 id = 1;
+}
+
+message HideArticleResponse {}
+
+message Tag {
+  uint64 id = 1;
+  string name = 2;
+}
+
+message ListTagsRequest {}
+
+message ListTagsResponse {
+  repeated Tag tags = 1;
+}

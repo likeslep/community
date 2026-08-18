@@ -1,0 +1,38 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'gateway'
+    static_configs:
+      - targets: ['gateway:8080']
+  - job_name: 'user'
+    static_configs:
+      - targets: ['user:8080']
+  - job_name: 'content'
+    static_configs:
+      - targets: ['content:8080']
+  - job_name: 'interaction'
+    static_configs:
+      - targets: ['interaction:8080']
+  - job_name: 'social'
+    static_configs:
+      - targets: ['social:8080']
+  - job_name: 'moderation'
+    static_configs:
+      - targets: ['moderation:8080']
+  - job_name: 'notification'
+    static_configs:
+      - targets: ['notification:8080']
+  - job_name: 'feed'
+    static_configs:
+      - targets: ['feed:8080']
+  - job_name: 'search'
+    static_configs:
+      - targets: ['search:8080']
+  - job_name: 'file'
+    static_configs:
+      - targets: ['file:8080']
+  - job_name: 'admin'
+    static_configs:
+      - targets: ['admin:8080']

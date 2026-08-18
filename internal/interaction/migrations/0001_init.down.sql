@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS outbox_events;
+DROP TABLE IF EXISTS counters;
+DROP TABLE IF EXISTS collections;
+DROP TABLE IF EXISTS likes;
+DROP TABLE IF EXISTS comments;

@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS outbox_events;
+DROP TABLE IF EXISTS article_tags;
+DROP TABLE IF EXISTS tags;
+DROP TABLE IF EXISTS article_versions;
+DROP TABLE IF EXISTS articles;

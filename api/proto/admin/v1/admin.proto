@@ -1,0 +1,142 @@
+syntax = "proto3";
+
+package community.admin.v1;
+
+option go_package = "github.com/likeslep/community/api/gen/admin/v1;adminv1";
+
+service AdminService {
+  // 举报处理（聚合 moderation-service）。
+  rpc ListReports(ListReportsRequest) returns (ListReportsResponse);
+  rpc HandleReport(HandleReportRequest) returns (HandleReportResponse);
+  // 审计日志（admin 自有数据）。
+  rpc ListAuditLogs(ListAuditLogsRequest) returns (ListAuditLogsResponse);
+  // 用户管理（聚合 user-service）。
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
+  rpc BanUser(BanUserRequest) returns (BanUserResponse);
+  // 内容管理（聚合 content-service）。
+  rpc HideArticle(HideArticleRequest) returns (HideArticleResponse);
+  // 评论管理（聚合 interaction-service）。
+  rpc DeleteComment(DeleteCommentRequest) returns (DeleteCommentResponse);
+  // 标签管理（聚合 content-service）。
+  rpc ListTags(ListTagsRequest) returns (ListTagsResponse);
+  // 敏感词管理（聚合 moderation-service）。
+  rpc ListSensitiveWords(ListSensitiveWordsRequest) returns (ListSensitiveWordsResponse);
+  rpc CreateSensitiveWord(CreateSensitiveWordRequest) returns (CreateSensitiveWordResponse);
+  // 数据统计。
+  rpc Statistics(StatisticsRequest) returns (StatisticsResponse);
+}
+
+message Report {
+  uint64 id = 1;
+  uint64 reporter_id = 2;
+  string target_type = 3;
+  uint64 target_id = 4;
+  string reason = 5;
+  string status = 6;
+}
+
+message ListReportsRequest {
+  int32 limit = 1;
+}
+
+message ListReportsResponse {
+  repeated Report reports = 1;
+}
+
+message HandleReportRequest {
+  uint64 id = 1;
+  string action = 2;
+}
+
+message HandleReportResponse {}
+
+message AuditLog {
+  uint64 id = 1;
+  uint64 admin_id = 2;
+  string action = 3;
+  string target_type = 4;
+  uint64 target_id = 5;
+  string detail = 6;
+}
+
+message ListAuditLogsRequest {
+  int32 limit = 1;
+}
+
+message ListAuditLogsResponse {
+  repeated AuditLog logs = 1;
+}
+
+message UserBrief {
+  uint64 id = 1;
+  string username = 2;
+  string role = 3;
+  string status = 4;
+}
+
+message ListUsersRequest {
+  int32 limit = 1;
+  int32 offset = 2;
+}
+
+message ListUsersResponse {
+  repeated UserBrief users = 1;
+}
+
+message BanUserRequest {
+  uint64 id = 1;
+}
+
+message BanUserResponse {}
+
+message HideArticleRequest {
+  uint64 id = 1;
+}
+
+message HideArticleResponse {}
+
+message DeleteCommentRequest {
+  uint64 id = 1;
+}
+
+message DeleteCommentResponse {}
+
+message Tag {
+  uint64 id = 1;
+  string name = 2;
+}
+
+message ListTagsRequest {}
+
+message ListTagsResponse {
+  repeated Tag tags = 1;
+}
+
+message SensitiveWord {
+  uint64 id = 1;
+  string word = 2;
+  string level = 3;
+}
+
+message ListSensitiveWordsRequest {}
+
+message ListSensitiveWordsResponse {
+  repeated SensitiveWord words = 1;
+}
+
+message CreateSensitiveWordRequest {
+  string word = 1;
+  string level = 2;
+}
+
+message CreateSensitiveWordResponse {}
+
+message StatisticsRequest {}
+
+message StatisticsResponse {
+  int64 user_count = 1;
+  int64 report_count = 2;
+  int64 tag_count = 3;
+  int64 sensitive_word_count = 4;
+  int64 audit_log_count = 5;
+}
